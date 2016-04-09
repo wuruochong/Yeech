@@ -28,6 +28,8 @@ public class Magpie2
      *            the user statement
      * @return a response based on the rules given
      * Checks for keywords in order of priority
+     * Does not check for complete word
+     * (When a keyword is included in another word, it is still detected)
      */
     public String getResponse(String statement)
     {
@@ -68,7 +70,7 @@ public class Magpie2
 	    {
 		response = "How can I help you?";
 	    }
-	else if (statement.indexOf("What's up") >= 0)
+	else if (statement.indexOf("sup") >= 0)
 	    {
 		response = "Nothing much, you?";
 	    }
