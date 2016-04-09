@@ -27,6 +27,7 @@ public class Magpie2
      * @param statement
      *            the user statement
      * @return a response based on the rules given
+     * Checks for keywords in order of priority
      */
     public String getResponse(String statement)
     {
