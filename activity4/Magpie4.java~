@@ -41,7 +41,7 @@ public class Magpie4{
 	    response = "Tell me more about your family.";
 	
 	// Responses which require transformations
-	else if (findKeyword(statement, "I want", 0) >= 0)
+	else if (findKeyword(statement, "I want to", 0) >= 0)
 	    response = transformIWantStatement(statement);
      
 	else{
@@ -52,9 +52,6 @@ public class Magpie4{
 	    if (psn >= 0
 		&& findKeyword(statement, "me", psn) >= 0)
 		response = transformYouMeStatement(statement);
-	    else if (psn >= 0
-		     && findKeyword(statement, "I", 0) >= 0)
-		response = transformMeYouStatement(statement);
 	    else
 		response = getRandomResponse();
 	    
@@ -71,7 +68,7 @@ public class Magpie4{
      * @return the transformed statement
      */
 
-    private String transformIWantStatement(String statement){
+    private String tranformIWantStatement(String statement){
 
 	// Remove the final period, if there is one
 	statement = statement.trim();
@@ -79,7 +76,7 @@ public class Magpie4{
 	if (lastChar.equals("."))
 	    statement = statement.substring(0, statement.length()-1);
 	int psn = findKeyword(statement, "I want", 0);
-	if (statement.substring(psn+7, psn+9).equals("to"))
+	if (statement.substring(psn+7).equals("to"))
 	    return ("What would it mean to " +
 		    statement.substring(psn+9).trim() + "?");
 	else
@@ -105,22 +102,8 @@ public class Magpie4{
 	String restOfStatement = statement.substring(psnOfYou + 3, psnOfMe).trim();
 	return "What makes you think that I " + restOfStatement + " you?";
     }
-
-    private String transformMeYouStatement(String statement){
-	//  Remove the final period, if there is one
-	statement = statement.trim();
-	String lastChar = statement.substring(statement.length()-1);
-	if (lastChar.equals("."))
-	    statement = statement.substring(0, statement.length()-1);
-	int psnOfI = findKeyword(statement,"I" , 0);
-	int psnOfYou = findKeyword (statement, "you", psnOfI+1);
-	//improved to handle negatives, ie. "I DON'T like you."
-	if (statement.substring(psnOfI+2, psnOfI+7).equals("don't"))
-	    return "Why don't you " + statement.substring(psnOfI+7, psnOfYou).trim() + " me?";
-	else
-	    return "Why do you " + statement.substring(psnOfI+1, psnOfYou).trim() + " me?";
-    }
-
+		
+	
     /**
      * Search for one word in phrase. The search is not case
      * sensitive. This method will check that the given goal
